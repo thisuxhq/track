@@ -20,7 +20,15 @@ wrangler login
 wrangler kv:namespace create "ANALYTICS_KV"
 ```
 
-4. Update your `wrangler.toml`:
+4. Set up your configuration:
+```bash
+# Copy the example config
+cp wrangler.toml.example wrangler.toml
+
+# Update wrangler.toml with your KV namespace IDs and other settings
+```
+
+Example wrangler.toml structure:
 ```toml
 name = "analytics-api"
 main = "src/index.ts"
@@ -28,8 +36,8 @@ compatibility_date = "2024-01-18"
 
 [[kv_namespaces]]
 binding = "ANALYTICS_KV"
-id = "your-kv-namespace-id"
-preview_id = "your-preview-kv-namespace-id"
+id = "your-kv-namespace-id"        # Replace with your production KV ID
+preview_id = "your-preview-id"     # Replace with your preview KV ID
 ```
 
 5. Deploy:
