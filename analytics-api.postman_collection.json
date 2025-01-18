@@ -1,0 +1,307 @@
+{
+    "info": {
+        "name": "Analytics API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "https://your-worker.workers.dev",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "Track Events",
+            "item": [
+                {
+                    "name": "Track Play Event",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/track",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "track"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": {
+                                "event": "play",
+                                "user_id": "user123",
+                                "metadata": {
+                                    "song_id": "song456",
+                                    "playlist": "workout_mix",
+                                    "device": "iphone"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Track Stop Event",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/track",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "track"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": {
+                                "event": "stop",
+                                "user_id": "user123",
+                                "metadata": {
+                                    "song_id": "song456",
+                                    "played_duration": 180
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Track with Future Timestamp",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/track",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "track"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": {
+                                "event": "play",
+                                "user_id": "user123",
+                                "timestamp": "2025-12-31T23:59:59Z",
+                                "metadata": {
+                                    "song_id": "song456"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Track with Large Metadata",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/track",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "track"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": {
+                                "event": "test",
+                                "user_id": "user123",
+                                "metadata": {
+                                    "large_field": "{{$randomLoremParagraphs(50)}}"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Get Metrics",
+            "item": [
+                {
+                    "name": "Daily Metrics",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/metrics?start_date={{$isoTimestamp -7 days}}}&end_date={{$isoTimestamp}}&group_by=day&user_id=user123",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "metrics"
+                            ],
+                            "query": [
+                                {
+                                    "key": "start_date",
+                                    "value": "{{$isoTimestamp -7 days}}"
+                                },
+                                {
+                                    "key": "end_date",
+                                    "value": "{{$isoTimestamp}}"
+                                },
+                                {
+                                    "key": "group_by",
+                                    "value": "day"
+                                },
+                                {
+                                    "key": "user_id",
+                                    "value": "user123"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Weekly Metrics",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/metrics?start_date={{$isoTimestamp -30 days}}&end_date={{$isoTimestamp}}&group_by=week",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "metrics"
+                            ],
+                            "query": [
+                                {
+                                    "key": "start_date",
+                                    "value": "{{$isoTimestamp -30 days}}"
+                                },
+                                {
+                                    "key": "end_date",
+                                    "value": "{{$isoTimestamp}}"
+                                },
+                                {
+                                    "key": "group_by",
+                                    "value": "week"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Invalid Date Format",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/metrics?start_date=2024-1-1&end_date=2024-01-10",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "metrics"
+                            ],
+                            "query": [
+                                {
+                                    "key": "start_date",
+                                    "value": "2024-1-1"
+                                },
+                                {
+                                    "key": "end_date",
+                                    "value": "2024-01-10"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Get Sessions",
+            "item": [
+                {
+                    "name": "Daily Sessions",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/sessions?start_date={{$isoTimestamp -7 days}}&end_date={{$isoTimestamp}}&group_by=day&user_id=user123",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "sessions"
+                            ],
+                            "query": [
+                                {
+                                    "key": "start_date",
+                                    "value": "{{$isoTimestamp -7 days}}"
+                                },
+                                {
+                                    "key": "end_date",
+                                    "value": "{{$isoTimestamp}}"
+                                },
+                                {
+                                    "key": "group_by",
+                                    "value": "day"
+                                },
+                                {
+                                    "key": "user_id",
+                                    "value": "user123"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Weekly Sessions",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/sessions?start_date={{$isoTimestamp -30 days}}&end_date={{$isoTimestamp}}&group_by=week",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "sessions"
+                            ],
+                            "query": [
+                                {
+                                    "key": "start_date",
+                                    "value": "{{$isoTimestamp -30 days}}"
+                                },
+                                {
+                                    "key": "end_date",
+                                    "value": "{{$isoTimestamp}}"
+                                },
+                                {
+                                    "key": "group_by",
+                                    "value": "week"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
