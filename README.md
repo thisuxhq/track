@@ -257,7 +257,7 @@ Common error messages:
 - CORS is enabled for all origins
 - SSL/TLS is required for all API calls
 
-Need help? Found a bug? Check our GitHub issues or contact support@example.com
+Need help? Found a bug? Check our GitHub issues or contact work@thisux.com
 
 ## 🧪 Testing
 
